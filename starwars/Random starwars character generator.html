@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARWARS RANDOM CHARACTER GENERATOR</title>
+    <style>
+        * {
+            margin: 0PX;
+            padding: 0PX;
+        }
+        
+        MAin {
+            height: 100VH;
+            width: 100VW;
+            background: rgb(34, 193, 195);
+            background: linear-gradient(186deg, rgba(34, 193, 195, 1) 0%, rgba(253, 79, 45, 1) 100%);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 50PX;
+            text-decoration: underline;
+            font-family: sans-serif;
+        }
+        
+        button {
+            padding: 20PX;
+            margin: 20px;
+            margin-top: 20PX;
+            border-radius: 10PX;
+            font-size: x-large;
+            display: block;
+            margin: auto;
+        }
+        
+        img {
+            margin-top: 20PX;
+            margin: 20PX;
+            width: 200px;
+            height: auto;
+            box-shadow: 10px 10px 5px black;
+            display: block;
+            margin: auto;
+        }
+        
+        p {
+            font-weight: 200;
+            position: absolute;
+            bottom: 0px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <MAin><br>
+        <H1>STARWARS RANDOM CHARACTER GENERATOR</H1>
+        <BR> <img src="" class="char-img" alt="">
+        <BR>
+        <h1 class="name"></h1>
+        <BR><button>Generate Character</button>
+        <P>All rights reserved Copyright @Akash Arya</P>
+    </MAin>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <Script>
+        //FUNCTION TO GENERATE A RANDOM CHARACTER FROM STARWARS API
+
+        $(document).ready(function() {
+
+            $("button").on("click", function() {
+                const randNum = Math.ceil(Math.random() * 88);
+                $.get(`https://rawcdn.githack.com/akabab/starwars-api/0.2.1/api/id/${randNum}.json`,
+                    function(data) {
+                        console.log(data)
+                        $("h1.name").text(data['name'])
+                        $("img.char-img").attr("src", data['image'])
+
+                    })
+            })
+        })
+    </Script>
+
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather app</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<style>
+    * {}
+    
+    .wbody {
+        background-color: #ffb3b3;
+        padding: 20px;
+        margin-top: 30px;
+        margin-bottom: 100px;
+        border-radius: 20px;
+        height: auto
+    }
+    
+    .cfooter {
+        border-top: shadow black;
+    }
+    
+    .about {
+        display: none;
+        text-align: center;
+        line-height: 30px;
+    }
+    
+    .guide {
+        display: none;
+        text-align: center;
+        line-height: 30px;
+    }
+    /*
+    #tgl {
+        display: none;
+        text-align: center;
+        line-height: 30px;
+    }*/
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Weather App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="(toggleAbout())">About  this App</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Cities
+                </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#" onclick="(getWeather('Delhi'))">Delhi</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="(getWeather('Mumbai'))">Mumbai</a></li>
+
+                            <li><a class="dropdown-item" href="#" onclick="(getWeather('Bangalore'))">Bangalore</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#" tabindex="-1" aria-disabled="true" onclick="(toggleGuide())">Usage Guide</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" id="city" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" id="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container wbody">
+        <h1 class="my-4 text-center">Weather for <span id="cityName">Delhi</span></h1>
+        <main>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Air</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title"><small class="text-muted fw-light"></small></h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Humidity is <span id="humidity"></span></li>
+                                <li>Wind Speed is <span id="wind_speed"></span></li>
+                                <li>Wind Degrees is <span id="wind_degrees"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Temperatures</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title"><small class="text-muted fw-light"></small></h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Temperature is <span id="temp"></span></li>
+                                <li>Max Temp is <span id="max_temp"></span></li>
+                                <li>Min Temp is <span id="min_temp"></span></li>
+                                <li>feels_like <span id="feels_like"></span></li>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Sky</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title"><small class="text-muted fw-light"></small></h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>cloud_pct <span id="cloud_pct"></span></li>
+                                <li>sunrise at <span id="sunrise"></span></li>
+                                <li>sunset at <span id="sunset"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </main>
+
+    </div>
+    <div class="about">
+        <h1>About the App</h1>
+        <p>This app is is a simple Weather app that use a weather API to get the current weather of any area and show it in real time. It is also my personal project.</p>
+    </div>
+    <div class="guide">
+        <h1>Usage Guide</h1>
+        <p>For ease a few selected cities are already given as options. If you wish to find weather of any other random city type it's name in search box and hit enter.</p>
+    </div>
+
+
+    <div class="container cfooter">
+        <footer class="py-5">
+            <div class="row">
+                <div class="col-2">
+                    <h5>India</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Kolkata'))">Kolkata</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Chennai'))">Chennai</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Jaipur'))">Jaipur</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Hyderabad'))">Hyderabad</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Pune'))">Pune</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <h5>America</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('San Francisco'))">San Francisco</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('New York'))">New York</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Chicago'))">Chicago</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Los Angeles'))">Los Angeles</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Miami'))">Miami</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <h5>Asia</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Tokyo'))">Tokyo</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Beijing'))">Beijing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Moscow'))">Moscow</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Cape Town'))">Cape Town</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted" onclick="(getWeather('Giza'))">Giza</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-4 offset-1">
+                    <form>
+                        <h5>Contact</h5>
+                        <p>Email: akasharya350@gmail.com</p>
+                        <p>LinkedIN: https://www.linkedin.com/in/akasharya123/</p>
+                        <p>Github: https://github.com/Akasharya123</p>
+
+                        <!-- <div class="d-flex w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address" fdprocessedid="74atfm">
+                            <button class="btn btn-primary" type="button" fdprocessedid="s36bpa">Subscribe</button>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between py-4 my-4 border-top">
+                <p>© 2021 By Akash Arya, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+                    <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>

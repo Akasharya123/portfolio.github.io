@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>MY POKEDEX</h1>
+
+    <div class="pokemondata" id="pokedex"> </div>
+
+
+    <script>
+        console.log('hello world');
+        const pokedex = document.getElementById('pokedex');
+
+        const getpokemon = () => {
+            const promises = [];
+            for (let i = 1; i <= 100; i++) {
+                const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+
+                promises.push(fetch(url)
+                    .then((res) =>
+                        res.json()
+                    ))
+            }
+            Promise.all(promises).then(results => {
+                const pokemon = results.map((data) => ({
+                    name: data.name,
+                    id: data.id,
+                    image: data.sprites['front_default'],
+                    type: data.types.map((type) => type.type.name).join(",")
+
+                }));
+                displaypok(pokemon);
+            });
+
+
+        };
+
+        getpokemon();
+
+        const displaypok = (pokemon) => {
+            console.log(pokemon);
+            const html = pokemon.map((pokemon) => `
+<li class="box">
+    <img class="box-image" src="${pokemon.image}" alt="" srcset="">
+    <h2 class="box-title">ID : ${pokemon.id}- ${pokemon.name} </h2>
+    <p class="box-subtitle">Type: ${pokemon.type}</p>
+
+</li>`).join('');
+            pokedex.innerHTML = html;
+        }
+    </script>
+
+</body>
+
+</html>

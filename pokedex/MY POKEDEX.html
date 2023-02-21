@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY POKEDEX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <div class="pokemondata" id="pokemondata">
+
+            <h1>MY POKEDEX</h1>
+
+            <button class="next" onclick="getdata()" style="margin: 10px;">KNOW YOUR POKEMON</button>
+            <div class="pimg" id="pimg"> </div>
+            <h1 class="pid" id="pid">
+
+
+            </h1>
+            <h1 class="pname" id="pname">
+
+            </h1>
+            <h2 class="ptype" id="ptype"></h2>
+        </div>
+
+    </div>
+    <script>
+        let pokemondata = document.getElementsByClassName('pokemondata')
+        let data = '';
+        let name = '';
+        var image;
+        let type = [];
+        let id = 1;
+
+
+        let idn = prompt("enter a pokemon name", '1');
+        const pok = `https://pokeapi.co/api/v2/pokemon/${idn}`;
+
+        const displaypok = () => {
+            image = `<img class="box-image" src="${image}" alt="" srcset="">`;
+            pid.innerHTML = "ID = " + id;
+            pname.innerHTML = 'Name = ' + name;
+            pimg.innerHTML = image;
+            ptype.innerHTML = 'Type = ' + type;
+        }
+
+        function getdata() {
+            let num = 1;
+            num = Math.random();
+            idn = Math.round(num * 100);
+            const pok = `https://pokeapi.co/api/v2/pokemon/${idn}`;
+
+            fetch(pok)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    console.log(data);
+                    name = data.name;
+                    id = data.id;
+                    image = data.sprites['front_default'];
+                    // data.types.forEach(type => {
+                    //    pokemon['type'] = pokemon['type'] + ',' + types.type.name;
+                    type = data.types.map((type) => type.type.name).join(",");
+
+                    console.log(image);
+                    displaypok();
+
+                })
+
+
+        }
+
+        fetch(pok)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data);
+                name = data.name;
+                id = data.id;
+                image = data.sprites['front_default'];
+                // data.types.forEach(type => {
+                //    pokemon['type'] = pokemon['type'] + ',' + types.type.name;
+                type = data.types.map((type) => type.type.name).join(",");
+
+                console.log(image);
+                displaypok();
+
+            })
+        console.log(pok)
+
+
+
+        document.getElementsByClassName('pokemon').innerText = data;
+    </script>
+
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+    * {
+        background-color: royalblue;
+        font-family: 'Dancing Script', cursive;
+        justify-content: center;
+    }
+    
+    .main {
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    img {
+        height: 300px;
+        background-color: bisque;
+    }
+    
+    .pimg {
+        background-color: bisque;
+    }
+    
+    h1,
+    h2 {
+        background-color: transparent;
+    }
+    
+    button {
+        font-size: 20px;
+        border: solid 2 px;
+        border-radius: 10px;
+        background-color: gainsboro;
+    }
+    
+    .pokemondata {
+        display: grid;
+        background-color: bisque;
+        z-index: +1;
+        width: 400px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        box-sizing: content-box;
+        border: 10px red solid;
+        border-radius: 10px;
+    }
+</style>
+
+</html>
